@@ -1,0 +1,156 @@
+<script>
+
+    function checkEqualNames(){
+
+        var a=document.getElementsByClassName('checkvattr');
+        var acounts = [];
+        var b=document.getElementsByClassName('checkeattr');
+        var bcounts = [];
+        var vertexDuplicatesCount=0;
+        var edgeDuplicatesCount=0;
+
+
+        if(a.length == 0 || b.length == 0){
+            alert("You must add at least one attribute for both vertexes and edges");
+            return false;
+        }
+
+        for (var i = 0; i < a.length; i++) {
+            if(a[i].value=="")
+                continue;
+                if (acounts[a[i].value]=='-1') {
+                    vertexDuplicatesCount++;
+                    console.log("vertexes= "+vertexDuplicatesCount);
+                    a[i].style.backgroundColor='red';
+                    a[i].value="";
+                }else{
+                    acounts[a[i].value]='-1';
+                }
+        }
+
+        for (var j = 0; j < b.length; j++) {
+            if(b[j].value=="")
+                continue;
+            if (bcounts[b[j].value]=='-1') {
+                edgeDuplicatesCount++;
+                console.log("edges= "+edgeDuplicatesCount);
+                b[j].style.backgroundColor='red';
+                b[j].value="";
+            }else{
+                bcounts[b[j].value]='-1';
+            }
+        }
+        console.log(vertexDuplicatesCount+" "+edgeDuplicatesCount);
+
+        if(vertexDuplicatesCount > 0 || edgeDuplicatesCount > 0){
+            alert("You can't use duplicated names for vertex/edges attributes");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
+<div class="to_hide">
+    <div class="right-content">
+    <div class="mother-grid-inner">
+<div class="grid-form">
+    <div class="grid-form1">
+        <h2 id="forms-example" class="">Insert data</h2>
+        <form name="dataentry" id="dataentry" action="create_tree.php" method="POST">
+
+            <input type="hidden" id="page" name="page" value="1">
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" required placeholder="Name of the tree, no spaces or special chars" id="name" pattern="^[a-zA-Z0-9]+$" name="name">
+            </div>
+            <div class="form-group">
+                <label for="split">Split Size</label>
+                <input type="number" class="form-control" placeholder="Split size of the tree, only values >= 1" required min="1" step="1" id="split"  name="split">
+            </div>
+
+            <div class="form-group">
+                <label for="depth">Depth</label>
+                <input type="number" class="form-control" placeholder="Depth of the tree, only values >= 1" required min="1" step="1" id="depth"  name="depth">
+            </div>
+
+            <div class="form-group">
+                <label for="num_vattr" class="vertexattrbtn">Number of <strong>Vertex</strong> Attributes</label>
+                <input type="number" class="form-control" id="num_vattr" placeholder=">=1" required min="1" step="1" name="num_attr_vertex">
+            </div>
+            <div id="more_vattr" style="padding-left:30px;" ></div>
+            <button type="button" class="btn btn-default " id="vertexattrbtn" style="border: 1px solid deepskyblue" onclick="addAttr('more_vattr', document.getElementById('num_vattr').value, 'vattr', 'vertexattrbtn'); ">Add Vertex attributes</button>
+
+            <br>
+            <br>
+
+            <div class="form-group">
+                <label for="num_eattr" class="edgeattrbtn">Number of <strong>Edge</strong> Attributes</label>
+                <input type="number" class="form-control mandatory" id="num_eattr" placeholder=">=1" required min="1" step="1"  name="num_attr_edge">
+            </div>
+            <div id="more_eattr" style="padding-left:30px;" ></div>
+            <button type="button" class="btn btn-default" id="edgeattrbtn" style="border: 1px solid deepskyblue" onclick="addAttr('more_eattr', document.getElementById('num_eattr').value, 'eattr', 'edgeattrbtn'); ">Add Edge attributes</button>
+
+
+            <script>
+                function addAttr (where, num, name, id) {
+                    var i=0;
+                        if(num>=1){
+                        for (i=1; i<=num; i++) {
+                            var attr_input = '<div class="form-group">' +
+                                                '<p><strong>Attribute '+i+'</strong></p>'+
+                                                '<label for="name_'+name + i + '" class="col-sm-2 control-label hor-form">Name ' + i + '</label>' +
+                                                '<div class="col-sm-10">'+
+                                                '<input type="text" class="form-control check'+name+'" onfocus="this.style.backgroundColor=\'#fff\';" required pattern=\"^[a-zA-Z0-9]+$\" name="name_'+name + i + '">' +
+                                                '</div>'+
+                                                '<label for="min_'+name + i + '" class="col-sm-2 control-label hor-form">Min Value ' + i + '</label>' +
+                                                '<div class="col-sm-10">'+
+                                                     '<input type="number" class="form-control " required name="min_'+name + i + '">' +
+                                                '</div>'+
+                                                '<label for="max_'+name + i + '" class="col-sm-2 control-label hor-form">Max Value ' + i + '</label>' +
+                                                '<div class="col-sm-10">'+
+                                                    '<input type="number" class="form-control " required name="max_'+name + i + '">' +
+                                                '</div>'+
+                                                '<label><input type="checkbox" name="int_'+name+i+'">&nbsp Check if you want the value to be an integer</label>'+
+                                             '</div>';
+
+                            document.getElementById(where).innerHTML += attr_input;
+                        }
+
+                            document.getElementById(id).style.display='none';
+                            var pippo=document.getElementsByClassName(id);
+                            pippo[0].style.color='black';
+                        }else{
+                            var pippo=document.getElementsByClassName(id);
+                            pippo[0].style.color='red';
+                        }
+                }
+            </script>
+
+            <br>
+            <br>
+
+            <button type="submit" class="btn btn-primary pippo" onclick="return checkEqualNames();">SUBMIT</button>
+
+        </form>
+    </div>
+</div>
+    </div>
+</div>
+</div>
+
+
+
+<div class="wait">
+    <div class="agile3-grids">
+        <div class="col-sm-6 hover-buttons">
+            <div class="wrap">
+                <div class="bg-effect">
+                    <h2>Loading, please wait...</h2>
+                    <img style="display: block; margin:auto;" src="skins/pooled/images/wait.gif">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

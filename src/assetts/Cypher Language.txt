@@ -1,0 +1,42 @@
+# CREZIONE NODI
+Using periodic commit 50000 LOAD CSV WITH HEADERS FROM 'file:///Nodi_ss3.csv' AS line 
+Create( :Vertex {name:line.name, attr1: toFloat(line.attr1), attr2: toFloat(line.attr2), attr3: toFloat(line.attr3), attr4: toFloat(line.attr4), attr5: toFloat(line.attr5)})
+
+# CREAZIONE INDEX
+
+Create index on :Vertex_(name)
+
+
+# CREAZIONE ARCHI 
+Using periodic commit 50000 LOAD CSV WITH HEADERS FROM 'file:///Archi_ss3.csv' AS line 
+Match (v_from:Vertex { name:line.from })
+Match (v_to:Vertex { name:line.to })
+Create( (v_from)<-[:EDGE {attr1: toFloat(line.attr1), attr2: toFloat(line.attr2), attr3: toFloat(line.attr3), attr4: toFloat(line.attr4), attr5: toFloat(line.attr5)}]-(v_to))
+
+
+# SOMMA
+Match p=(from:Vertex {name:'vertex_2391484'})-[:EDGE*]->(to:Vertex {name:'vertex_1'})
+using index from:Vertex(name)
+using index to:Vertex(name)
+with nodes(p) as nod, relationships(p) as rels
+return
+nod,
+reduce(sum = 0, n IN nod| sum + n.attr1) as tot_attr1_node,
+reduce(sum = 0, n IN nod| sum + n.attr2) as tot_attr2_node, 
+reduce(sum = 0, n IN nod| sum + n.attr3) as tot_attr3_node,
+reduce(sum = 0, n IN nod| sum + n.attr4) as tot_attr4_node, 
+reduce(sum = 0, n IN nod| sum + n.attr5) as tot_attr5_node,
+reduce(sum = 0, n IN nod| sum + n.attr6) as tot_attr6_node,
+reduce(sum = 0, n IN nod| sum + n.attr7) as tot_attr7_node, 
+reduce(sum = 0, n IN nod| sum + n.attr8) as tot_attr8_node,
+reduce(sum = 0, n IN nod| sum + n.attr9) as tot_attr9_node, 
+reduce(sum = 0, n IN nod| sum + n.attr10) as tot_attr10_node,
+reduce(sum = 0, n IN rels| sum + n.attr1) as tot_attr1_edge,
+reduce(sum = 0, n IN rels| sum + n.attr2) as tot_attr2_edge,
+reduce(sum = 0, n IN rels| sum + n.attr3) as tot_attr3_edge,
+reduce(sum = 0, n IN rels| sum + n.attr4) as tot_attr4_edge,
+reduce(sum = 0, n IN rels| sum + n.attr5) as tot_attr5_edge
+
+
+# DELETE, RUN UNTIL YOU GET 0 AS RETURN
+MATCH (a:Vertex) WITH a LIMIT 50000 DETACH DELETE a RETURN count(a)

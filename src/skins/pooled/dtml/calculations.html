@@ -1,0 +1,69 @@
+<div class="to_hide">
+    <div class="right-content">
+        <div class="mother-grid-inner">
+            <div class="grid-form">
+                <div class="grid-form1">
+
+                            <h2>Tree Data</h2>
+                            <table id="table">
+                                <thead>
+                                <tr>
+                                    <th style="background-color: #6852B2;">Name</th>
+                                    <th style="background-color: #6852B2;">Split Size</th>
+                                    <th style="background-color: #6852B2;">Depth</th>
+                                    <th style="background-color: #6852B2;"># of Nodes</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><[name]></td>
+                                    <td><[split]></td>
+                                    <td><[depth]></td>
+                                    <td><[nodes]></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                    <br>
+                    <h2 id="forms-example" class="">Insert data</h2>
+                    <form name="dataentry" id="dataentry" action="calculations.php" method="POST">
+
+                        <input type="hidden" id="page" name="page" value="1">
+                        <input type="hidden" id="name" name="name" value="<[name]>">
+                        <div class="form-group">
+                            <label for="directed">Uncheck if you want the Sum consider the Undirected Tree</label>
+                            <input type="checkbox" id="directed" value="directed" name="directed" checked>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="node_start">Starting Node</label>
+                            <input type="number" class="form-control" required min="1" step="1" max="<[nodes]>" id="node_end"  name="node_end">
+                        </div>
+                        <div class="form-group">
+                            <label for="node_end">Ending Node</label>
+                            <input type="number" class="form-control" required min="1" step="1" max="<[nodes]>" id="node_start" name="node_start">
+                        </div>
+
+
+                        <br>
+                        <br>
+                        <button type="submit" class="btn btn-primary pippo">SUBMIT</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wait">
+    <div class="agile3-grids">
+        <div class="col-sm-6 hover-buttons">
+            <div class="wrap">
+                <div class="bg-effect">
+                    <h2>Loading...</h2>
+                    <img style="display: block; margin:auto;" src="skins/pooled/images/wait.gif">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

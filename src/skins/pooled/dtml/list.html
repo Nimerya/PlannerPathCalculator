@@ -1,0 +1,37 @@
+<div class="agile-grids">
+    <!-- tables -->
+
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <h2>Choose a Tree to <[action]></h2>
+            <table id="table">
+                <thead>
+                <tr>
+                    <th style="background-color: <[color]>">Name</th>
+                    <th style="background-color: <[color]>">Split Size</th>
+                    <th style="background-color: <[color]>">Depth</th>
+                    <th style="background-color: <[color]>"># of Nodes</th>
+                    <th style="background-color: <[color]>">Vertex Attributes</th>
+                    <th style="background-color: <[color]>">Edge Attributes</th>
+                </tr>
+                </thead>
+                <tbody>
+                <[foreach]>
+
+               <tr onclick="window.location='<[url]>?name=<[name]>&split=<[split_size]>&depth=<[depth]>&nodes=<[tot_nodes]>'" style="cursor: pointer;">
+
+                   <td><[name]></td>
+                   <td><[split_size]></td>
+                   <td><[depth]></td>
+                   <td><[tot_nodes]></td>
+                   <td><[vertexAttrList]></td>
+                   <td><[edgeAttrList]></td>
+
+                </tr>
+                </a>
+                <[/foreach]>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
