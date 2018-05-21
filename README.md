@@ -3,8 +3,7 @@ Software Engineering project
 
 documentation available @ /docs/Documentation.docx
 
-Authors:
-
+Authors:\\
 https://github.com/valent0ne
 
 https://github.com/Nimerya
